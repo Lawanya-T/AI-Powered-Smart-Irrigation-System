@@ -4,10 +4,9 @@ from dotenv import load_dotenv
  
 load_dotenv()
  
-def get_connection():
-     return 
-psycopg2.connect( dbname=os.getenv("DB_NAME", "irrigation"), 
-                 user=os.getenv("DB_USER", "postgres"), 
-                 password=os.getenv("DB_PASSWORD"), 
-                 host=os.getenv("DB_HOST", "localhost"), 
-                 port=os.getenv("DB_PORT", "5432"), )
+DATABASE_URL = os.getenv("DATABASE_URL")
+
+if not DATABASE_URL:
+    raise ValueError("DATABASE_URL environment variable is missing")
+
+conn = psycopg2.connect(DATABASE_URL)
